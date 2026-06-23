@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#afcbd8" />
+    <title>学习专题 · Nuonuo's Garden</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="learning-topic-page">
+    <div class="noise"></div>
+    <nav class="nav learning-nav">
+      <a class="brand" href="experience.html#ai"><span class="brand-seed">←</span><span>BACK TO EXPERIENCE</span></a>
+      <div class="nav-links"><a href="#capture">记录学习</a><a href="#cards">知识卡片</a></div>
+      <span class="page-marker">LEARNING ROOM</span>
+    </nav>
+
+    <main>
+      <section class="topic-hero">
+        <div class="topic-hero-copy">
+          <p class="eyebrow">AI CREATION · LEARNING TOPIC</p>
+          <div class="editable-topic-title">
+            <h1 id="topic-title">视听语言</h1>
+            <button id="rename-topic" type="button">修改专题名 ↗</button>
+          </div>
+          <p id="topic-description">学习镜头、构图、运动、剪辑与声音如何共同完成表达。</p>
+          <div class="topic-stats">
+            <span><strong id="card-count">0</strong> 张知识卡</span>
+            <span>本地持续生长</span>
+          </div>
+        </div>
+        <div class="topic-hero-art" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <i>FRAME<br />SOUND<br />TIME</i>
+        </div>
+      </section>
+
+      <section class="learning-capture" id="capture">
+        <div class="capture-heading">
+          <div>
+            <p class="section-index">01 / CAPTURE TODAY</p>
+            <h2>今天，你理解了什么？</h2>
+          </div>
+          <p>像讲给一个朋友听那样说出来。不必先整理得完美，表达本身就是理解正在形成的过程。</p>
+        </div>
+
+        <div class="capture-workspace">
+          <div class="capture-input">
+            <label for="learning-input">LEARNING NOTE</label>
+            <textarea id="learning-input" placeholder="比如：今天我理解了景别不只是画面大小，它实际上决定了观众与人物之间的心理距离……"></textarea>
+            <div class="capture-actions">
+              <span class="input-hint">可直接使用系统输入法的语音转文字，完成后继续修改内容</span>
+              <button class="generate-card-button" id="generate-card" type="button">生成视觉知识卡 <b>✦</b></button>
+            </div>
+          </div>
+
+          <div class="card-preview-panel">
+            <p>LIVE PREVIEW</p>
+            <div class="empty-preview" id="empty-preview">
+              <span>✦</span>
+              <p>你的下一张知识卡<br />会在这里出现</p>
+            </div>
+            <div class="generated-preview" id="generated-preview" hidden>
+              <img id="preview-image" alt="新生成的视觉知识卡" />
+              <div>
+                <button id="download-card" type="button">下载 PNG ↓</button>
+                <button id="continue-learning" type="button">继续记录</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="storage-note">隐私说明：当前内容只保存在这个浏览器的本地存储中，不会自动上传到云端。</p>
+      </section>
+
+      <section class="learning-card-library" id="cards">
+        <div class="card-library-heading">
+          <div><p class="section-index">02 / KNOWLEDGE CARDS</p><h2>这个专题，正在形成怎样的理解？</h2></div>
+          <p>每一张卡都保留原始讲述。以后重新阅读时，可以继续修正，而不是假装第一次理解就是最终答案。</p>
+        </div>
+        <div class="learning-card-grid" id="learning-card-grid"></div>
+        <div class="empty-library" id="empty-library">还没有卡片。去记录今天学到的第一件事吧。</div>
+      </section>
+    </main>
+
+    <div class="rename-dialog" id="rename-dialog" hidden>
+      <div>
+        <label for="rename-input">专题名称</label>
+        <input id="rename-input" maxlength="24" />
+        <textarea id="description-input" maxlength="100" placeholder="用一句话描述这个专题"></textarea>
+        <div><button id="cancel-rename" type="button">取消</button><button id="save-rename" type="button">保存</button></div>
+      </div>
+    </div>
+    <script src="learning-topics.js"></script>
+  </body>
+</html>
