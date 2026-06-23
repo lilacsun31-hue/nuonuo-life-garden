@@ -89,13 +89,25 @@
     return chunks.filter(Boolean);
   }
 
+  function splitSentences(text) {
+    return text
+      .replace(/\s+/g, "")
+      .split(/(?<=[。！？；])/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
   function cardTitle(text) {
     const first = text.split(/[。！？\n]/).find((part) => part.trim()) || "今天的新理解";
-    return first.trim().replace(/^(今天我理解了|今天学到|我发现|原来)/, "").slice(0, 22) || "今天的新理解";
+    return first
+      .trim()
+      .replace(/^(今天先学习了|今天我理解了|今天学到|我发现|原来)/, "")
+      .replace(/[：:，,。！？\s]/g, "")
+      .slice(0, 18) || "今天的新理解";
   }
 
   function keywordList(text) {
-    const known = ["镜头", "构图", "景别", "运动", "剪辑", "声音", "节奏", "空间", "时间", "叙事", "情绪", "视角", "光影", "色彩"];
+    const known = ["影像", "记忆", "镜头", "构图", "景别", "运动", "剪辑", "声音", "节奏", "空间", "时间", "叙事", "情绪", "视角", "光影", "色彩", "共情"];
     const hits = known.filter((word) => text.includes(word));
     return [...new Set(hits)].slice(0, 4).length ? [...new Set(hits)].slice(0, 4) : ["观察", "表达", "理解"];
   }
@@ -104,10 +116,111 @@
     return Array.from(text).reduce((hash, char) => ((hash << 5) - hash + char.charCodeAt(0)) | 0, 0);
   }
 
-  function makeCardSvg(topic, text, date) {
+  function wrapSvgText(text, limit, maxLines) {
+    const source = String(text || "");
+    const lines = [];
+    let line = "";
+    Array.from(source).forEach((char) => {
+      line += char;
+      if (line.length >= limit || "，。；！？、".includes(char)) {
+        lines.push(line.trim());
+        line = "";
+      }
+    });
+    if (line.trim()) lines.push(line.trim());
+    const clipped = lines.filter(Boolean).slice(0, maxLines);
+    if (lines.length > maxLines && clipped.length) {
+      clipped[clipped.length - 1] = `${clipped[clipped.length - 1].replace(/[。！？；，、]$/, "")}…`;
+    }
+    return clipped;
+  }
+
+  function extractIdeaSections(text) {
+    const normalized = text.trim();
+    const markerPattern = /(第[一二三四五六七八九十\d]+个?点[：:，,、]?\s*)/g;
+    const markers = [...normalized.matchAll(markerPattern)];
+    if (!markers.length) {
+      return splitSentences(normalized).slice(0, 3).map((sentence, index) => ({
+        order: index + 1,
+        title: sentence.replace(/^[一二三四五六七八九十\d]+[、.]\s*/, "").slice(0, 12),
+        body: sentence,
+      }));
+    }
+    return markers.map((marker, index) => {
+      const start = marker.index + marker[0].length;
+      const end = markers[index + 1]?.index ?? normalized.length;
+      const body = normalized.slice(start, end).trim();
+      const firstBreak = body.search(/[。！？\n]/);
+      const firstLine = (firstBreak >= 0 ? body.slice(0, firstBreak) : body).trim();
+      const title = firstLine
+        .replace(/^[：:，,、\s]+/, "")
+        .replace(/^我觉得它是/, "")
+        .replace(/^我觉得/, "")
+        .slice(0, 14);
+      const visualTitle = /视觉|想象|感受|冲击|身临其境|大眼睛/.test(body);
+      return {
+        order: index + 1,
+        title: visualTitle && index >= 2 ? "视觉感受与共情" : title || `核心观点 ${index + 1}`,
+        body,
+      };
+    }).filter((item) => item.body);
+  }
+
+  function compactSummary(section, allText) {
+    const body = section.body;
+    if (/定格|记忆|瞬间|保存/.test(body)) {
+      return "把流动的世界按下暂停，让某个瞬间成为可反复回看的记忆坐标。";
+    }
+    if (/视觉|想象|感受|冲击|身临其境|大眼睛/.test(body)) {
+      return "调动视觉、想象空间与感受力，让信息从“知道”变成更直接的共情与震撼。";
+    }
+    if (/情感|艺术|思想|表达|流派/.test(body)) {
+      return "通过摄影方式、构图与风格，把个人情感和思想转化为可被看见的作品。";
+    }
+    const sentences = splitSentences(body);
+    return (sentences[1] || sentences[0] || body).slice(0, 42);
+  }
+
+  function ideaIcon(section) {
+    const body = section.body;
+    if (/定格|记忆|瞬间|保存/.test(body)) return "⏸";
+    if (/视觉|想象|感受|冲击|身临其境/.test(body)) return "◉";
+    if (/情感|艺术|思想|表达|流派/.test(body)) return "✦";
+    return ["01", "02", "03"][section.order - 1] || "•";
+  }
+
+  function extractCardData(topic, text, date) {
     const title = cardTitle(text);
-    const lines = splitText(text, 20).slice(0, 6);
+    const sections = extractIdeaSections(text).slice(0, 3);
+    while (sections.length < 3) {
+      sections.push({
+        order: sections.length + 1,
+        title: ["记忆", "表达", "感受"][sections.length],
+        body: text,
+      });
+    }
+    const headline = text.includes("影像") ? "影像的三种作用" : title;
+    const thesis = text.includes("影像")
+      ? "影像不是简单记录画面，而是在时间、情感与感受力之间，建立一种可以被反复进入的经验。"
+      : splitSentences(text)[0]?.slice(0, 56) || "把今天的新理解整理成可以反复回看的知识结构。";
     const keywords = keywordList(text);
+    return {
+      title,
+      headline,
+      thesis,
+      keywords,
+      sections: sections.map((section) => ({
+        ...section,
+        summary: compactSummary(section, text),
+        icon: ideaIcon(section),
+      })),
+      date,
+      topicName: topic.name,
+    };
+  }
+
+  function makeCardSvg(topic, text, date) {
+    const data = extractCardData(topic, text, date);
     const seed = Math.abs(hashText(text));
     const palette = [
       ["#102820", "#d9ff59", "#edf0d8", "#8eb6c6"],
@@ -115,28 +228,37 @@
       ["#263d50", "#e8c5ad", "#edf0d8", "#a9d4c5"],
       ["#3d3048", "#d9e6a2", "#f2efd9", "#c9a5d1"],
     ][seed % 4];
-    const shapes = Array.from({ length: 5 }, (_, index) => {
-      const x = 540 + ((seed >> index) % 220);
-      const y = 70 + ((seed >> (index + 2)) % 300);
-      const r = 75 + ((seed >> (index + 4)) % 110);
-      return `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${palette[(index % 2) + 1]}" stroke-width="2" opacity="${0.24 + index * 0.07}"/>`;
+    const sectionSvg = data.sections.map((section, index) => {
+      const x = 76 + index * 348;
+      const summaryLines = wrapSvgText(section.summary, 16, 4);
+      const titleLines = wrapSvgText(section.title, 8, 2);
+      return `<g transform="translate(${x},330)">
+        <rect width="296" height="270" rx="26" fill="${palette[2]}" opacity=".09" stroke="${palette[2]}" stroke-opacity=".32"/>
+        <circle cx="52" cy="56" r="27" fill="${palette[1]}" opacity=".92"/>
+        <text x="52" y="66" text-anchor="middle" fill="${palette[0]}" font-size="25" font-family="serif">${escapeHtml(section.icon)}</text>
+        <text x="248" y="61" text-anchor="end" fill="${palette[1]}" opacity=".85" font-size="13" letter-spacing="3" font-family="sans-serif">0${section.order}</text>
+        ${titleLines.map((line, lineIndex) => `<text x="34" y="${120 + lineIndex * 35}" fill="${palette[2]}" font-size="29" font-family="Noto Serif SC, serif">${escapeHtml(line)}</text>`).join("")}
+        <line x1="34" y1="184" x2="262" y2="184" stroke="${palette[1]}" opacity=".55"/>
+        ${summaryLines.map((line, lineIndex) => `<text x="34" y="${224 + lineIndex * 28}" fill="${palette[2]}" opacity=".74" font-size="20" font-family="Noto Serif SC, serif">${escapeHtml(line)}</text>`).join("")}
+      </g>`;
     }).join("");
-    const lineSvg = lines.map((line, index) =>
-      `<text x="76" y="${315 + index * 35}" fill="${palette[2]}" opacity="${index === 0 ? 0.92 : 0.7}" font-size="${index === 0 ? 20 : 16}" font-family="Noto Serif SC, serif">${escapeHtml(line)}</text>`
+    const keywordSvg = data.keywords.map((word, index) =>
+      `<text x="${76 + index * 130}" y="714" fill="${palette[1]}" font-size="17" font-family="sans-serif"># ${escapeHtml(word)}</text>`
     ).join("");
-    const keywordSvg = keywords.map((word, index) =>
-      `<text x="${76 + index * 105}" y="548" fill="${palette[1]}" font-size="13" font-family="sans-serif"># ${escapeHtml(word)}</text>`
-    ).join("");
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
-      <rect width="900" height="600" fill="${palette[0]}"/>
-      <rect x="26" y="26" width="848" height="548" rx="2" fill="none" stroke="${palette[2]}" opacity=".22"/>
-      ${shapes}
-      <text x="76" y="82" fill="${palette[1]}" font-size="12" letter-spacing="3" font-family="sans-serif">LEARNING NOTE · ${escapeHtml(topic.name.toUpperCase())}</text>
-      <text x="76" y="172" fill="${palette[2]}" font-size="42" font-family="Noto Serif SC, serif">${escapeHtml(title)}</text>
-      <line x1="76" y1="220" x2="410" y2="220" stroke="${palette[1]}" opacity=".7"/>
-      ${lineSvg}
+    const thesisLines = wrapSvgText(data.thesis, 30, 2);
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+      <rect width="1200" height="800" fill="${palette[0]}"/>
+      <circle cx="970" cy="106" r="210" fill="${palette[3]}" opacity=".12"/>
+      <circle cx="1035" cy="156" r="210" fill="none" stroke="${palette[1]}" stroke-width="2" opacity=".32"/>
+      <circle cx="895" cy="156" r="210" fill="none" stroke="${palette[2]}" stroke-width="2" opacity=".18"/>
+      <rect x="34" y="34" width="1132" height="732" rx="4" fill="none" stroke="${palette[2]}" opacity=".22"/>
+      <text x="76" y="90" fill="${palette[1]}" font-size="14" letter-spacing="4" font-family="sans-serif">STRUCTURED LEARNING · ${escapeHtml(data.topicName.toUpperCase())}</text>
+      <text x="76" y="175" fill="${palette[2]}" font-size="62" font-family="Noto Serif SC, serif">${escapeHtml(data.headline)}</text>
+      <line x1="76" y1="222" x2="455" y2="222" stroke="${palette[1]}" opacity=".72"/>
+      ${thesisLines.map((line, index) => `<text x="76" y="${270 + index * 34}" fill="${palette[2]}" opacity=".72" font-size="22" font-family="Noto Serif SC, serif">${escapeHtml(line)}</text>`).join("")}
+      ${sectionSvg}
       ${keywordSvg}
-      <text x="824" y="548" text-anchor="end" fill="${palette[2]}" opacity=".5" font-size="12" font-family="sans-serif">${escapeHtml(date)}</text>
+      <text x="1124" y="714" text-anchor="end" fill="${palette[2]}" opacity=".5" font-size="15" font-family="sans-serif">${escapeHtml(date)}</text>
     </svg>`;
   }
 
@@ -148,8 +270,8 @@
     const image = new Image();
     image.onload = () => {
       const canvas = document.createElement("canvas");
-      canvas.width = 900;
-      canvas.height = 600;
+      canvas.width = 1200;
+      canvas.height = 800;
       canvas.getContext("2d").drawImage(image, 0, 0);
       callback(canvas.toDataURL("image/png"));
     };
@@ -179,19 +301,32 @@
       const grid = document.querySelector("#learning-card-grid");
       const empty = document.querySelector("#empty-library");
       grid.innerHTML = topic.cards.map((card) => `
-        <article class="saved-learning-card">
+        <article class="saved-learning-card" data-card-id="${card.id}">
           <img src="${card.image}" alt="${escapeHtml(card.title)}" />
           <div>
             <span>${escapeHtml(card.date)}</span>
             <h3>${escapeHtml(card.title)}</h3>
             <p>${escapeHtml(card.content)}</p>
-            <a href="${card.image}" download="${escapeHtml(topic.name)}-${card.id}.png">下载图片 ↓</a>
+            <div class="saved-card-actions">
+              <a href="${card.image}" download="${escapeHtml(topic.name)}-${card.id}.png">下载图片 ↓</a>
+              <button type="button" data-delete-card="${card.id}">删除卡片</button>
+            </div>
           </div>
         </article>
       `).join("");
       empty.hidden = topic.cards.length > 0;
       updateHeader();
     }
+
+    document.querySelector("#learning-card-grid").addEventListener("click", (event) => {
+      const deleteButton = event.target.closest("[data-delete-card]");
+      if (!deleteButton) return;
+      const cardId = Number(deleteButton.dataset.deleteCard);
+      topic.cards = topic.cards.filter((card) => Number(card.id) !== cardId);
+      topics = topics.map((item) => item.id === topic.id ? topic : item);
+      saveTopics(topics);
+      renderCards();
+    });
 
     document.querySelector("#rename-topic").addEventListener("click", () => {
       const dialog = document.querySelector("#rename-dialog");
