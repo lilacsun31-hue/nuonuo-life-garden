@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dce4c4" />
+    <title>Nuonuo's Garden · 我所创造的世界</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="cursor-orb"></div>
+
+    <nav class="nav">
+      <a class="brand" href="#world">
+        <span class="brand-seed">✦</span>
+        <span>NUONUO'S GARDEN</span>
+      </a>
+      <div class="nav-links">
+        <a href="#world">我的世界</a>
+        <a href="#cards">生命卡片</a>
+        <a href="#decades">三个十年</a>
+        <a href="#memories">人生策展</a>
+      </div>
+      <button class="sound-button" aria-label="切换环境声音">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <main>
+      <section class="hero" id="world">
+        <div class="hero-copy">
+          <p class="eyebrow">MY LIVING WORLD · 2026</p>
+          <h1>我所创造的世界，<em>正在生长。</em></h1>
+          <p class="intro">
+            这里的每一朵花，都不是购买所得。<br />
+            它们来自一个真实活过的日子。
+          </p>
+          <button class="primary-button" data-open-story>
+            <span>种下今天的故事</span>
+            <i>↗</i>
+          </button>
+        </div>
+
+        <div class="world-stage world-stage-3d" aria-label="一座可旋转的立体人生花园">
+          <div id="garden-canvas" class="garden-canvas"></div>
+          <div class="world-loading">
+            <span></span>
+            <p>正在唤醒你的世界</p>
+          </div>
+          <div class="world-gradient"></div>
+          <div class="sun">
+            <span>今日能量</span>
+            <strong>晴朗</strong>
+          </div>
+
+          <div class="floating-label label-library">
+            <span class="label-dot"></span>
+            <p>知识图书馆</p>
+            <small>128 个思想正在连接</small>
+          </div>
+          <div class="floating-label label-snow">
+            <span class="label-dot"></span>
+            <p>自由雪山</p>
+            <small>下一站 · 滑雪教练</small>
+          </div>
+
+          <div class="world-caption">
+            <span class="drag-icon">↔</span>
+            <p>拖动旋转 · 滚轮靠近</p>
+          </div>
+        </div>
+
+        <div class="scroll-note">
+          <span>SCROLL TO WANDER</span>
+          <i></i>
+        </div>
+      </section>
+
+      <section class="manifesto">
+        <p class="section-index">01 / WORLD RULE</p>
+        <div class="manifesto-title">
+          <p>这不是一座用金币建造的花园。</p>
+          <h2>
+            我用经历作种子，<br />
+            用感受作雨水，<br />
+            <span>把一生种成一个世界。</span>
+          </h2>
+        </div>
+        <div class="rule-notes">
+          <article>
+            <span>真实发生</span>
+            <p>每一个物件，都对应一段真实的生命经历。</p>
+          </article>
+          <article>
+            <span>自然生长</span>
+            <p>不追求完美和打卡，允许花园拥有四季。</p>
+          </article>
+          <article>
+            <span>彼此照亮</span>
+            <p>给别人的花园种花，也会照亮自己的世界。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="life-cards" id="cards">
+        <div class="section-head">
+          <div>
+            <p class="section-index">02 / MY LIFE SYSTEM</p>
+            <h2>五种生命力，<br />构成我的生态。</h2>
+          </div>
+          <p class="section-desc">
+            它们不是等待完成的任务，而是我想在一生中不断积累的生命资产。
+          </p>
+        </div>
+
+        <div class="card-orbit">
+          <a class="life-card card-work" href="work.html">
+            <div class="card-top"><span>01</span><i>↗</i></div>
+            <div class="card-symbol symbol-work">
+              <span></span><span></span><span></span>
+            </div>
+            <div>
+              <small>WORK · 创造</small>
+              <h3>工作卡</h3>
+              <p>我能为这个世界，创造什么独特价值？</p>
+            </div>
+            <div class="card-enter"><span>进入工作卡</span><i>→</i></div>
+          </a>
+
+          <a class="life-card card-experience" href="experience.html">
+            <div class="card-top"><span>02</span><i>↗</i></div>
+            <div class="card-symbol symbol-map">
+              <span></span><span></span><span></span>
+            </div>
+            <div>
+              <small>EXPERIENCE · 看见</small>
+              <h3>经验卡</h3>
+              <p>通过旅行、阅读与他人，探索世界的边界。</p>
+            </div>
+            <div class="card-enter"><span>进入经验卡</span><i>→</i></div>
+          </a>
+
+          <article class="life-card card-sense" data-card="sense">
+            <div class="card-top"><span>03</span><i>↗</i></div>
+            <div class="card-symbol symbol-wave">
+              <span></span><span></span><span></span>
+            </div>
+            <div>
+              <small>SENSE · 自由</small>
+              <h3>感官卡</h3>
+              <p>用速度、身体和音乐，确认自己正在活着。</p>
+            </div>
+            <div class="card-progress"><i style="--progress: 46%"></i></div>
+          </article>
+
+          <article class="life-card card-record" data-card="record">
+            <div class="card-top"><span>04</span><i>↗</i></div>
+            <div class="card-symbol symbol-record">
+              <span></span>
+            </div>
+            <div>
+              <small>RECORD · 留下</small>
+              <h3>记录卡</h3>
+              <p>为每一个十年写一本书，策展我走过的一生。</p>
+            </div>
+            <div class="card-progress"><i style="--progress: 35%"></i></div>
+          </article>
+
+          <article class="life-card card-share" data-card="share">
+            <div class="card-top"><span>05</span><i>↗</i></div>
+            <div class="card-symbol symbol-flower">✣</div>
+            <div>
+              <small>SHARE · 照亮</small>
+              <h3>分享卡</h3>
+              <p>在别人的生命里种花，见证彼此的绽放。</p>
+            </div>
+            <div class="card-progress"><i style="--progress: 53%"></i></div>
+          </article>
+        </div>
+
+      </section>
+
+      <section class="decades-section" id="decades">
+        <div class="decades-copy">
+          <p class="section-index">03 / THREE DECADES</p>
+          <h2>我为自己预留了，至少三种十年。</h2>
+          <p>
+            它们不是一张必须照表完成的计划，而是三个不断扩张的生命章节。
+            每一个十年，五张卡都会继续生长。
+          </p>
+        </div>
+        <div class="decade-rings">
+          <article>
+            <span>30—40</span>
+            <h3>建造与试验</h3>
+            <p>建立方法，扩张边界，验证属于自己的产品与谋生系统。</p>
+            <i>NOW</i>
+          </article>
+          <article>
+            <span>40—50</span>
+            <h3>创造与连接</h3>
+            <p>让方法成为工具、服务与共同体，帮助更多生命真实绽放。</p>
+          </article>
+          <article>
+            <span>50—60</span>
+            <h3>传承与策展</h3>
+            <p>形成代表作品、十年之书与可以被长久保存的人生展览。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="memory-section" id="memories">
+        <div class="memory-copy">
+          <p class="section-index">04 / LIFE ARCHIVE</p>
+          <h2>人生不是被管理，<br />而是被看见。</h2>
+          <p>
+            当所有散落的瞬间重新连接，<br />
+            你会看见自己正在成为怎样的人。
+          </p>
+          <a class="text-button" href="archive.html">进入人生策展馆 <span>→</span></a>
+        </div>
+        <div class="memory-gallery">
+          <article class="memory memory-one">
+            <span>2016—2025</span>
+            <div class="memory-art art-rings"></div>
+            <h3>第一个十年：成为产品创造者</h3>
+            <small>WORK · 10 YEARS</small>
+          </article>
+          <article class="memory memory-two">
+            <span>MEMORY 042</span>
+            <div class="memory-art art-lake"></div>
+            <h3>带妈妈住进一间湖景房</h3>
+            <small>SHARE · LOVE</small>
+          </article>
+          <article class="memory memory-three">
+            <span>NEXT CHAPTER</span>
+            <div class="memory-art art-mountain"></div>
+            <h3>去雪山，学习另一种自由</h3>
+            <small>SENSE · COURAGE</small>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="story-panel" aria-hidden="true">
+      <button class="panel-close" aria-label="关闭">×</button>
+      <div class="panel-step">TODAY · JUNE 19, 2026</div>
+      <h2>今天，什么在你的<br />生命里发生了？</h2>
+      <p>不需要总结得很好。讲给花园听，它会理解。</p>
+      <textarea
+        id="story-input"
+        placeholder="比如：今天我终于鼓起勇气，报名了期待很久的滑雪课程……"
+      ></textarea>
+      <div class="story-tags">
+        <button data-fill="今天完成了一次很有挑战的产品提案，我第一次感到自己的经验正在变成真正能帮助别人的方法。">工作创造</button>
+        <button data-fill="今天带妈妈去看了很漂亮的湖，她说这是她住过最好的房间。看到她开心，我觉得自己的努力有了另一种意义。">温暖连接</button>
+        <button data-fill="今天报名了滑雪教练课程。虽然还有一点害怕，但我想先让自己走进那片雪山。">勇敢尝试</button>
+      </div>
+      <button class="grow-button" id="grow-button">
+        <span>让它在世界里生长</span>
+        <i>✦</i>
+      </button>
+
+      <div class="growth-result">
+        <div class="result-visual"><span>✿</span></div>
+        <p class="result-label">NEW LIFE MEMORY</p>
+        <h3>你的花园长出了一株「勇气银莲」</h3>
+        <p class="result-quote">“自由不是没有恐惧，而是带着恐惧，仍然向雪山走去。”</p>
+        <div class="result-meta">
+          <span>感官卡 +8</span>
+          <span>经验卡 +3</span>
+          <span>勇气种子 ×1</span>
+        </div>
+        <button class="back-world">回到我的世界</button>
+      </div>
+    </div>
+    <div class="panel-backdrop"></div>
+
+    <script src="vendor/three.min.js"></script>
+    <script src="script.js"></script>
+    <script src="garden3d.js"></script>
+  </body>
+</html>
