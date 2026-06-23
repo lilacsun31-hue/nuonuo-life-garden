@@ -1932,10 +1932,128 @@ main > section {
 .notes-grid i { margin-top:25px; font-size:8px; font-style:normal; }
 .experience-return { background:#23483c; }
 
+.ai-topic-zone {
+  padding: 75px 0 15px;
+  border-bottom: 1px solid rgba(25,49,43,.25);
+}
+.topic-zone-heading {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  align-items: end;
+  margin-bottom: 38px;
+}
+.topic-zone-heading span { font-size:8px; letter-spacing:.16em; }
+.topic-zone-heading h3 { margin:12px 0 0; font:500 30px "Noto Serif SC"; }
+.topic-zone-heading > p { max-width:480px; margin:0 0 4px auto; color:rgba(25,49,43,.6); font:400 11px/1.9 "Noto Serif SC"; }
+.ai-topic-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.learning-topic-card, .new-topic-card {
+  min-height:430px;
+  padding:16px;
+  border:1px solid rgba(25,49,43,.23);
+  color:inherit;
+  background:rgba(255,255,255,.2);
+  text-decoration:none;
+  transition:transform .35s, background .35s, box-shadow .35s;
+}
+.learning-topic-card:hover, .new-topic-card:hover { transform:translateY(-8px); background:rgba(255,255,255,.55); box-shadow:0 20px 40px rgba(25,49,43,.08); }
+.topic-cover { height:235px; position:relative; overflow:hidden; padding:18px; color:var(--cream); background:var(--deep); }
+.topic-cover > span { position:relative; z-index:2; font-size:8px; letter-spacing:.15em; }
+.topic-cover i { position:absolute; width:180px; height:180px; right:-35px; top:30px; border:1px solid var(--topic-accent); border-radius:50%; opacity:.65; }
+.topic-cover i:nth-of-type(2) { right:18px; }
+.topic-cover i:nth-of-type(3) { right:72px; }
+.topic-cover strong { position:absolute; z-index:2; left:18px; bottom:20px; max-width:180px; font:500 28px/1.35 "Noto Serif SC"; }
+.topic-card-copy { padding:20px 5px 0; }
+.topic-card-copy small { color:#4f796d; font-size:7px; letter-spacing:.14em; }
+.topic-card-copy h4 { margin:9px 0 11px; font:500 20px "Noto Serif SC"; }
+.topic-card-copy p { min-height:55px; margin:0; color:rgba(25,49,43,.58); font:400 9px/1.75 "Noto Serif SC"; }
+.topic-card-copy > div { margin-top:18px; padding-top:12px; border-top:1px solid rgba(25,49,43,.18); display:flex; justify-content:space-between; font-size:8px; }
+.topic-card-copy b { font-weight:500; }
+.new-topic-card { border-style:dashed; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; }
+.new-topic-card > span { width:62px; height:62px; margin-bottom:22px; border:1px solid rgba(25,49,43,.3); border-radius:50%; display:grid; place-items:center; font:300 35px "DM Sans"; }
+.new-topic-card strong { font:500 18px "Noto Serif SC"; }
+.new-topic-card small { margin-top:9px; color:rgba(25,49,43,.48); }
+
+.learning-topic-page { background:#dce8e8; }
+.learning-nav { background:rgba(215,231,232,.88); }
+.topic-hero {
+  min-height:760px;
+  padding:165px 8vw 100px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  background:
+    radial-gradient(circle at 78% 45%,rgba(255,255,224,.76),transparent 26%),
+    linear-gradient(130deg,#b9d6df,#edf0d8 78%);
+}
+.topic-hero-copy { position:relative; z-index:2; max-width:900px; }
+.editable-topic-title { display:flex; align-items:end; gap:25px; }
+.editable-topic-title h1 { margin:0; font:400 clamp(58px,7vw,105px)/1.1 "Noto Serif SC"; letter-spacing:-.055em; }
+.editable-topic-title button { margin-bottom:16px; padding:0 0 6px; border:0; border-bottom:1px solid rgba(25,49,43,.35); background:transparent; cursor:pointer; font-size:10px; }
+.topic-hero-copy > p:not(.eyebrow) { max-width:560px; margin:28px 0 0; color:rgba(25,49,43,.64); font:400 13px/2 "Noto Serif SC"; }
+.topic-stats { margin-top:35px; display:flex; gap:10px; }
+.topic-stats span { padding:8px 13px; border:1px solid rgba(25,49,43,.22); border-radius:99px; font-size:9px; }
+.topic-stats strong { font-size:14px; font-weight:500; }
+.topic-hero-art { position:absolute; right:6vw; top:130px; width:430px; height:430px; }
+.topic-hero-art span { position:absolute; inset:0; border:1px solid rgba(25,49,43,.22); border-radius:50%; }
+.topic-hero-art span:nth-child(2) { transform:translateX(-92px); }
+.topic-hero-art span:nth-child(3) { transform:translateX(92px); }
+.topic-hero-art i { position:absolute; inset:0; display:grid; place-items:center; text-align:center; font:500 12px/2.1 "DM Sans"; font-style:normal; letter-spacing:.14em; }
+
+.learning-capture { padding:125px 8vw 140px; background:#f1efdc; }
+.capture-heading { display:grid; grid-template-columns:65% 35%; align-items:end; margin-bottom:60px; }
+.capture-heading h2 { margin:0; font:400 clamp(40px,4.5vw,65px)/1.35 "Noto Serif SC"; letter-spacing:-.045em; }
+.capture-heading > p { margin:0 0 8px; color:rgba(25,49,43,.58); font:400 11px/1.9 "Noto Serif SC"; }
+.capture-workspace { display:grid; grid-template-columns:58% 42%; min-height:620px; border:1px solid rgba(25,49,43,.2); }
+.capture-input { padding:35px; display:flex; flex-direction:column; border-right:1px solid rgba(25,49,43,.2); }
+.capture-input label, .card-preview-panel > p { font-size:8px; letter-spacing:.16em; }
+.capture-input textarea { flex:1; min-height:400px; margin:25px 0; padding:0; resize:none; outline:none; border:0; color:var(--ink); background:transparent; font:400 19px/2 "Noto Serif SC"; }
+.capture-input textarea::placeholder { color:rgba(25,49,43,.25); }
+.capture-actions { display:flex; align-items:center; gap:15px; padding-top:20px; border-top:1px solid rgba(25,49,43,.18); }
+.input-hint { margin-right:auto; color:rgba(25,49,43,.46); font:400 10px/1.6 "Noto Serif SC"; }
+.generate-card-button { height:48px; padding:0 19px; border:0; display:flex; align-items:center; gap:25px; color:var(--lime); background:var(--deep); cursor:pointer; }
+.generate-card-button b { font-weight:400; }
+.card-preview-panel { padding:35px; display:flex; flex-direction:column; background:#dbe6d2; }
+.empty-preview { flex:1; display:grid; place-items:center; align-content:center; text-align:center; color:rgba(25,49,43,.45); }
+.empty-preview > span { width:85px; height:85px; display:grid; place-items:center; border:1px solid rgba(25,49,43,.2); border-radius:50%; color:#86a677; font-size:28px; }
+.empty-preview p { font:400 13px/1.8 "Noto Serif SC"; }
+.generated-preview { margin:auto 0; }
+.generated-preview img { width:100%; display:block; box-shadow:0 18px 45px rgba(25,49,43,.15); }
+.generated-preview > div { margin-top:18px; display:flex; justify-content:flex-end; gap:8px; }
+.generated-preview button { padding:9px 13px; border:1px solid rgba(25,49,43,.24); background:transparent; cursor:pointer; font-size:9px; }
+.storage-note { margin:15px 0 0; color:rgba(25,49,43,.45); font-size:9px; }
+
+.learning-card-library { padding:125px 8vw 140px; color:var(--cream); background:#173a32; }
+.card-library-heading { display:grid; grid-template-columns:65% 35%; align-items:end; margin-bottom:65px; }
+.card-library-heading .section-index { color:var(--lime); }
+.card-library-heading h2 { max-width:800px; margin:0; font:400 clamp(38px,4vw,58px)/1.4 "Noto Serif SC"; letter-spacing:-.045em; }
+.card-library-heading > p { margin:0 0 7px; color:rgba(242,239,217,.5); font:400 11px/1.9 "Noto Serif SC"; }
+.learning-card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.saved-learning-card { border:1px solid rgba(242,239,217,.18); background:rgba(255,255,255,.025); }
+.saved-learning-card img { width:100%; display:block; aspect-ratio:3/2; object-fit:cover; }
+.saved-learning-card > div { padding:22px; }
+.saved-learning-card span { color:var(--lime); font-size:8px; letter-spacing:.12em; }
+.saved-learning-card h3 { margin:12px 0; font:400 20px "Noto Serif SC"; }
+.saved-learning-card p { max-height:100px; overflow:hidden; margin:0; color:rgba(242,239,217,.5); font:400 10px/1.8 "Noto Serif SC"; }
+.saved-learning-card a { display:inline-block; margin-top:20px; padding-bottom:5px; border-bottom:1px solid rgba(242,239,217,.25); color:var(--cream); text-decoration:none; font-size:9px; }
+.empty-library { padding:80px 0; border-top:1px solid rgba(242,239,217,.16); color:rgba(242,239,217,.4); text-align:center; font:400 13px "Noto Serif SC"; }
+
+.rename-dialog { position:fixed; inset:0; z-index:300; display:grid; place-items:center; padding:20px; background:rgba(16,40,32,.55); backdrop-filter:blur(8px); }
+.rename-dialog[hidden] { display:none; }
+.rename-dialog > div { width:min(480px,100%); padding:30px; color:var(--cream); background:var(--deep); }
+.rename-dialog label { display:block; margin-bottom:12px; color:var(--lime); font-size:9px; letter-spacing:.14em; }
+.rename-dialog input, .rename-dialog textarea { width:100%; padding:13px; border:1px solid rgba(242,239,217,.2); outline:none; color:var(--cream); background:rgba(255,255,255,.04); font:400 14px "Noto Serif SC"; }
+.rename-dialog textarea { min-height:100px; margin-top:10px; resize:none; }
+.rename-dialog > div > div { margin-top:20px; display:flex; justify-content:flex-end; gap:8px; }
+.rename-dialog button { padding:9px 17px; border:1px solid rgba(242,239,217,.25); color:var(--cream); background:transparent; cursor:pointer; }
+#save-rename { color:var(--deep); background:var(--lime); border-color:var(--lime); }
+
 @media (max-width: 1100px) {
   .tool-dock { grid-template-columns:repeat(2,1fr); }
   .more-tools { min-height:240px; }
   .workbench-orbit { opacity:.25; right:-30px; }
+  .ai-topic-grid { grid-template-columns:repeat(2,1fr); }
+  .topic-hero-art { right:-180px; opacity:.35; }
 }
 
 @media (max-width: 900px) {
@@ -1974,6 +2092,11 @@ main > section {
   .case-results { grid-template-columns:1fr; }
   .case-results > p { grid-column:auto; }
   .next-copy { padding-left:0; }
+  .topic-zone-heading, .capture-heading, .card-library-heading { grid-template-columns:1fr; gap:20px; }
+  .topic-zone-heading > p { margin-left:0; }
+  .capture-workspace { grid-template-columns:1fr; }
+  .capture-input { border-right:0; border-bottom:1px solid rgba(25,49,43,.2); }
+  .learning-card-grid { grid-template-columns:repeat(2,1fr); }
 }
 
 @media (max-width: 600px) {
@@ -2053,6 +2176,19 @@ main > section {
   .case-decisions { grid-template-columns:1fr; }
   .case-results { grid-template-columns:repeat(2,1fr); }
   .case-results > p { grid-column:1/-1; }
+  .ai-topic-grid { grid-template-columns:1fr; }
+  .learning-topic-card, .new-topic-card { min-height:400px; }
+  .topic-hero { min-height:690px; padding:145px 24px 90px; }
+  .editable-topic-title { display:block; }
+  .editable-topic-title h1 { font-size:58px; }
+  .editable-topic-title button { margin-top:18px; }
+  .learning-capture, .learning-card-library { padding:80px 20px; }
+  .capture-input, .card-preview-panel { padding:24px; }
+  .capture-input textarea { min-height:330px; font-size:16px; }
+  .capture-actions { align-items:flex-start; flex-wrap:wrap; }
+  .input-hint { order:3; width:100%; }
+  .generate-card-button { margin-left:auto; }
+  .learning-card-grid { grid-template-columns:1fr; }
   .story-panel { padding: 65px 24px 35px; }
   .story-panel h2 { font-size: 32px; }
 }
